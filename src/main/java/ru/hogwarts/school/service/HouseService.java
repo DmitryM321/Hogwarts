@@ -2,32 +2,38 @@ package ru.hogwarts.school.service;
 
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Faculty;
-import ru.hogwarts.school.model.Student;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
 public class HouseService {
     private Map<Long, Faculty> faculties = new HashMap<>();
-    private Long generatedFacultytId = 1L;
+    private long lastId = 0;
 
     public Faculty createFaculty(Faculty faculty) {
-        faculties.put(generatedFacultytId, faculty);
-        generatedFacultytId++;
+        faculty.setId(++lastId);
+        faculties.put(lastId, faculty);
         return faculty;
     }
-    public Faculty getFacultyById(Long facultyId) {
-        return faculties.get(facultyId);
+    public Faculty getfacultyById(Long id) {
+        return faculties.get(id);
     }
 
-    public Faculty updateFaculty(Long facultyId, Faculty faculty) {
-        faculties.put(facultyId, faculty);
-        return faculty;
+    public Faculty editFaculty(Faculty faculty) {
+        if (faculties.containsKey(faculty.getId())){
+            faculties.put(faculty.getId(), faculty);
+            return faculty;
+        }
+        return null;
     }
 
-    public Faculty deleteFacultyId(Long facultyId) {
-        return faculties.remove(facultyId);
+    public Faculty deleteFaculty(Long id) {
+        return faculties.remove(id);
+    }
+    public Collection<Faculty> filerColorFaculty(String color) {
+        return faculties.values();
     }
 }
 
