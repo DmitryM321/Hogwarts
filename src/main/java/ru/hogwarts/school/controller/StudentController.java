@@ -25,7 +25,6 @@ public class StudentController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(student);
-
     }
     @PostMapping
     public Student createStudent(@RequestBody Student student) {
@@ -40,14 +39,13 @@ public class StudentController {
         return ResponseEntity.ok(foundStudent);
     }
     @DeleteMapping("{id}")
-    public Student deleteStudentId(@PathVariable Long id) {
-        return studentService.deleteStudentId(id);
+    public ResponseEntity deleteStudentId(@PathVariable Long id) {
+        studentService.deleteStudentId(id);
+        return ResponseEntity.ok().build();
     }
     @GetMapping
-    public ResponseEntity<Collection<Student>> filerAgeStudent(@RequestParam int age){
-        return ResponseEntity.ok(studentService.filerAgeStudent(age).stream()
-                .filter(student -> student.getAge() == age)
-                .collect(Collectors.toList()));
+    public ResponseEntity<Collection<Student>> findAllByAge(@RequestParam int age){
+        return ResponseEntity.ok(studentService.findAllByAge(age));
     }
 
 }

@@ -20,8 +20,8 @@ public class HouseController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Faculty> getStudent(@PathVariable Long id) {
-        Faculty faculty = houseService.getfacultyById(id);    // ?? метод
+    public ResponseEntity<Faculty> getFaculty(@PathVariable Long id) {
+        Faculty faculty = houseService.getFaculty(id);    // ?? метод
         if (faculty == null){
             return ResponseEntity.notFound().build();
         }
@@ -41,14 +41,14 @@ public class HouseController {
         return ResponseEntity.ok(foundFaculty);
     }
     @DeleteMapping("{id}")
-    public Faculty deleteFaculty(@PathVariable Long id) {
-        return houseService.deleteFaculty(id);
+    public ResponseEntity deleteFaculty(@PathVariable Long id) {
+        houseService.deleteFaculty(id);
+        return ResponseEntity.ok().build();
+
     }
     @GetMapping
-    public ResponseEntity<Collection<Faculty>> filerColorFaculty(@RequestParam String color){
-        return ResponseEntity.ok(houseService.filerColorFaculty(color).stream()
-                .filter(faculty -> faculty.getColor().equals(color))
-                .collect(Collectors.toList()));
+    public ResponseEntity<Collection<Faculty>> findAllByColor(@RequestParam String color){
+        return ResponseEntity.ok(houseService.findAllByColor(color));
     }
     }
 
