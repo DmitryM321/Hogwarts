@@ -6,8 +6,6 @@ import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.repository.FacultyRepository;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 public class HouseService {
@@ -27,13 +25,24 @@ public class HouseService {
     public Faculty editFaculty(Faculty faculty) {
         return facultyRepository.save(faculty);
     }
-
     public void deleteFaculty(Long id) {
         facultyRepository.deleteById(id);
     }
     public Collection<Faculty> findAllByColor(String color) {
         return facultyRepository.findAllByColor(color);
     }
-}
+
+
+
+//    public Collection<FacultyDTO> findAllByColor(String color) {
+//        return facultyRepository.findAllByColor(color);
+//    }
+    public Faculty findByNameIgnoreCase(String name){
+        return facultyRepository.findByNameIgnoreCase(name);
+    }
+//    FacultyDTO findFacultyByStudents(Long id){
+//        return FacultyDTO.fromFaculty(facultyRepository.findFacultyByStudents(id));
+    }
+
 
 
