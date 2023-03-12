@@ -2,6 +2,9 @@ package ru.hogwarts.school.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.hogwarts.school.DTO.FacultyDTO;
+import ru.hogwarts.school.DTO.StudentDTO;
+import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 import java.util.Collection;
@@ -17,23 +20,21 @@ public class StudentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Student> getStudent(@PathVariable Long id) {
-        Student student = studentService.getStudentById(id);    // ?? метод
-        if (student == null) {
+    public ResponseEntity<StudentDTO> getStudentById(@PathVariable Long id) {
+        StudentDTO studentDTO = studentService.getStudentById(id);    // ?? метод
+        if (studentDTO == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(student);
-
+        return ResponseEntity.ok(studentDTO);
     }
 
     @PostMapping
-    public Student createStudent(@RequestBody Student student) {
-        return studentService.createStudent(student);
+    public StudentDTO createStudent(@RequestBody StudentDTO studentDTO) {
+        return studentService.createStudent(studentDTO);
     }
-
-    @PutMapping()
-    public ResponseEntity<Student> editStudent(@RequestBody Student student) {
-        Student foundStudent = studentService.editStudent(student);
+    @PutMapping
+    public ResponseEntity<StudentDTO> editStudent(@RequestBody StudentDTO studentDTO) {
+        StudentDTO foundStudent = studentService.editStudent(studentDTO);
         if (foundStudent == null) {
             ResponseEntity.notFound().build();
         }
@@ -45,30 +46,33 @@ public class StudentController {
         studentService.deleteStudentId(id);
         return ResponseEntity.ok().build();
     }
-
 //    @GetMapping
 //    public ResponseEntity<Collection<Student>> findAllByAge(@RequestParam int age) {
 //        return ResponseEntity.ok(studentService.findAllByAge(age));
 //    }
-
-    @GetMapping
-    public ResponseEntity<Collection<Student>> findByAgeBetween(
-            @RequestParam(required = false) int min, int max) {
-        return ResponseEntity.ok(studentService.findByAgeBetween(min, max));
-    }
-}
 //    @GetMapping
 //    public ResponseEntity<Collection<Student>> findByAgeBetween(
-//            @RequestParam(required = false) int min, int max,
-//            @RequestParam(required = false) int age) {
-//        if (age >= 0) {
-//            return ResponseEntity.ok(studentService.findByAgeBetween(min, max));
-//        }
-//        if ((min != 0) && (max >= 0) && (max > min)) {
-//            return ResponseEntity.ok(studentService.findByAgeBetween(min, max));
-//        }
-//        return ResponseEntity.notFound().build();
+//            @RequestParam(required = false) int min, int max) {
+//        return ResponseEntity.ok(studentService.findByAgeBetween(min, max));
 //    }
-//}
+    @GetMapping
+    public ResponseEntity<Collection<StudentDTO>> getStudents(
+                @RequestParam(required = false) Integer age,
+                @RequestParam(required = false) Integer min,
+                @RequestParam(required = false) Integer max) {
+            if (age != 0) {
+                return ResponseEntity.ok(studentService.findAllByAge(age));
+            }
+            if (min != 0 && max != 0 && max > min) {
+                return ResponseEntity.ok(studentService.findByAgeBetween(min, max));
+            }
+        return ResponseEntity.notFound().build();
+        }
+    @GetMapping("{id}/faculty")
+    public ResponseEntity<FacultyDTO> findFacultyByStudentId(Long id) {
+       return ResponseEntity.ok(studentService.findFacultyByStudentId(id));
+    }
+}
+
 
 

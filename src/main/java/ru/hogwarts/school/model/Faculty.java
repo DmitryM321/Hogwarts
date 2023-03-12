@@ -3,14 +3,14 @@ package ru.hogwarts.school.model;
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
-
 @Entity
 public class Faculty {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "faculty_id")
         private Long facultyId;
         private String name;
-        String color;
+        private String color;
         @OneToMany(mappedBy = "faculty")
         private List<Student> students;
 
@@ -18,8 +18,8 @@ public class Faculty {
         return facultyId;
     }
 
-    public void setFacultyId(Long id_faculty) {
-        this.facultyId = id_faculty;
+    public void setFacultyId(Long facultyId) {
+        this.facultyId = facultyId;
     }
 
     public String getName() {
@@ -53,8 +53,6 @@ public class Faculty {
         this.name = name;
         this.color = color;
     }
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
