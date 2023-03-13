@@ -74,5 +74,7 @@ public class StudentService {
             return FacultyDTO.fromFaculty(faculty);
         }
 
-
+    public Student findStudentById(Long id) {
+        return studentRepository.findById(id).get();
+    }
 }
