@@ -48,7 +48,6 @@ public class HouseService {
         }
         return facultyDTOs;
     }
-
     public Collection<FacultyDTO> findAllByColor(String color) {
         Collection<Faculty> faculties = facultyRepository.findAllByColor(color);
         Collection<FacultyDTO> facultyDTOs = new ArrayList<>();
