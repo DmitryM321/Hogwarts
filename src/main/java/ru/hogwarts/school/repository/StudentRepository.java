@@ -2,18 +2,17 @@ package ru.hogwarts.school.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.stereotype.Repository;
 import ru.hogwarts.school.model.Student;
-import ru.hogwarts.school.model.StudentsByCategory;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long> {
     Collection<Student> findAllByAge(Integer age);
     Collection<Student> findByAgeBetween(Integer min, Integer max);
+
 
 //    @Query(value = "SELECT COUNT(*) AS count FROM student", nativeQuery = true)
 //     Long getCountStudent();

@@ -43,7 +43,7 @@ public class HouseController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping
+    @GetMapping("/facultes")
     public ResponseEntity<Collection<FacultyDTO>> findFaculties(
             @RequestParam(required = false) String color,
             @RequestParam(required = false) String name) {
@@ -61,13 +61,13 @@ public class HouseController {
         return ResponseEntity.ok(houseService.findStudentsByFacultyId(facultyId));
     }
 
-//    public ResponseEntity<Collection<Faculty>> findAllByColor(@RequestParam String color){
-//        return ResponseEntity.ok(houseService.findAllByColor(color));
-//    }
-//    @GetMapping
-//    public ResponseEntity<Faculty> findByNameIgnoreCase(@RequestParam String name) {
-//        return ResponseEntity.ok(houseService.findByNameIgnoreCase(name));
-//    }
+    public ResponseEntity<Collection<FacultyDTO>> findAllByColor(@RequestParam String color){
+        return ResponseEntity.ok(houseService.findAllByColor(color));
+    }
+    @GetMapping
+    public ResponseEntity<Collection<FacultyDTO>> findByNameIgnoreCase(@RequestParam String name) {
+        return ResponseEntity.ok(houseService.findByNameIgnoreCase(name));
+    }
 }
 
 
