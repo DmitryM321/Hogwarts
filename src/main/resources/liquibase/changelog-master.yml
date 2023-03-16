@@ -5,3 +5,5 @@ databaseChangeLog:
       file: liquibase/scripts/student.sql
   - include:
       file: liquibase/scripts/avatar.sql
+  - include:
+      file: liquibase/scripts/changes.sql
