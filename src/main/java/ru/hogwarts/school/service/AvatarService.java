@@ -55,7 +55,6 @@ public class AvatarService {
         avatar.setFileSize(file.getSize());
         avatar.setMediaType(file.getContentType());
         avatar.setData(generateImagePreview(filePath));
-       // avatar.setPreview(generateImagePreview(filePath));
 
         avatarRepository.save(avatar);
     }
