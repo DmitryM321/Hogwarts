@@ -14,7 +14,6 @@ import ru.hogwarts.school.model.AppInfo;
 
 @RestController
 public class InfoController {
-
     @Value("${app.env}")
     private String appEnv;
 
