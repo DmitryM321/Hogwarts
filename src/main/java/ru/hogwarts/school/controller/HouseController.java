@@ -9,9 +9,10 @@ import ru.hogwarts.school.service.HouseService;
 
 import java.util.Collection;
 
-@RequestMapping("faculty")
+@RequestMapping("/faculty")
 @RestController
 public class HouseController {
+
     private final HouseService houseService;
     public HouseController(HouseService houseService) {
         this.houseService = houseService;

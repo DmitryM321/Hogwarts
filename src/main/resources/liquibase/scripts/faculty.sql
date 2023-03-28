@@ -7,8 +7,3 @@ CREATE TABLE faculty(
     name          VARCHAR(255) NOT NULL UNIQUE,
     color         VARCHAR(255) NOT NULL);
 
-
-
--- private Long facultyId;
---         private String name;
---         private String color;

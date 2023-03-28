@@ -36,11 +36,12 @@ public class StudentController {
         this.avatarService = avatarService;
     }
 
-        @GetMapping("/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<StudentDTO> getStudentById(@PathVariable Long id) {
         StudentDTO studentDTO = studentService.getStudentById(id);    // ?? метод
         if (studentDTO == null) {
             return ResponseEntity.notFound().build();
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         return ResponseEntity.ok(studentDTO);
     }
@@ -73,14 +74,14 @@ public class StudentController {
         if (age != null) {
             return ResponseEntity.ok(studentService.findAllByAge(age));
         }
-        if (min != 0 && max != 0 && max > min) {
+        if (min != null && max != null && max > min) {
             return ResponseEntity.ok(studentService.findByAgeBetween(min, max));
         }
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("{id}/faculty")
-    public ResponseEntity<FacultyDTO> findFacultyByStudentId(Long id) {
+    @GetMapping("/{id}/faculty")
+    public ResponseEntity<FacultyDTO> findFacultyByStudentId(@PathVariable Long id) {
        return ResponseEntity.ok(studentService.findFacultyByStudentId(id));
     }
     @PostMapping(value = "/{id}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
