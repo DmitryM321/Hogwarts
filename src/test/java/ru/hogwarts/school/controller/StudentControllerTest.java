@@ -1,32 +1,37 @@
 package ru.hogwarts.school.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import net.minidev.json.JSONObject;
-import org.json.JSONException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 import ru.hogwarts.school.DTO.StudentDTO;
+import ru.hogwarts.school.config.ConfigDocker;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.FacultyRepository;
 import ru.hogwarts.school.repository.StudentRepository;
 
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-
 @SpringBootTest
 @AutoConfigureMockMvc
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-class StudentControllerTest {
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
+//@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@Testcontainers
+//@Import(ConfigDocker.class)
+class StudentControllerTest extends ConfigDocker {
+
     @Autowired
     MockMvc mockMvc;
     @Autowired
@@ -55,7 +60,8 @@ class StudentControllerTest {
     @AfterEach
     public void resetDb () {
         studentRepository.deleteAll();
-        }
+        facultyRepository.deleteAll();
+    }
     @Test
     void whenGetStudentById() throws Exception {
         mockMvc.perform(get("/students/" + student.getId()))
@@ -67,7 +73,6 @@ class StudentControllerTest {
     @Test
     void whenCreateStudent() throws Exception {
             mockMvc.perform(post( "/students")
-//                .content(objectMapper.writeValueAsString(student))
                 .content(objectMapper.writeValueAsString(StudentDTO.fromStudent(student)))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
