@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
+//@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 @Testcontainers
 //@Import(ConfigDocker.class)
 class HouseControllerTest extends ConfigDocker {
@@ -78,7 +78,7 @@ class HouseControllerTest extends ConfigDocker {
                 .andExpect(jsonPath("$.color").value(faculty.getColor()))
                 .andExpect(jsonPath("$.name").value(faculty.getName()));
     }
-    @Test // OK
+    @Test
     void deleteFacultyById() throws Exception {
         mockMvc.perform(delete("/faculty/" + faculty.getFacultyId()))
                 .andExpect(status().isOk());
