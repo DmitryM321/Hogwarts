@@ -15,22 +15,16 @@ import ru.hogwarts.school.config.ConfigDocker;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.repository.FacultyRepository;
 import ru.hogwarts.school.repository.StudentRepository;
-
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-//@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 @Testcontainers
-//@Import(ConfigDocker.class)
 class HouseControllerTest extends ConfigDocker {
-
     @Autowired
     MockMvc mockMvc;
     @Autowired
@@ -43,7 +37,6 @@ class HouseControllerTest extends ConfigDocker {
 
     @BeforeEach
     public void setUp() {
-        faculty.setFacultyId(1L);
         faculty.setName("Gryffindor");
         faculty.setColor("red");
         facultyRepository.save(faculty);
@@ -57,6 +50,7 @@ class HouseControllerTest extends ConfigDocker {
     void whenGetFaculty() throws Exception {
         mockMvc.perform(get("/faculty/" + faculty.getFacultyId()))
                 .andExpect(status().isOk())
+           //     .andExpect(jsonPath("$.facultyId").value(faculty.getFacultyId()))
                 .andExpect(jsonPath("$.name").value(faculty.getName()))
                 .andExpect(jsonPath("$.color").value(faculty.getColor()));
     }
