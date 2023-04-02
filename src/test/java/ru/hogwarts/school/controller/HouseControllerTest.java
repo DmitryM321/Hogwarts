@@ -50,7 +50,6 @@ class HouseControllerTest extends ConfigDocker {
     void whenGetFaculty() throws Exception {
         mockMvc.perform(get("/faculty/" + faculty.getFacultyId()))
                 .andExpect(status().isOk())
-           //     .andExpect(jsonPath("$.facultyId").value(faculty.getFacultyId()))
                 .andExpect(jsonPath("$.name").value(faculty.getName()))
                 .andExpect(jsonPath("$.color").value(faculty.getColor()));
     }
